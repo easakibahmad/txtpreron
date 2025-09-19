@@ -6,7 +6,7 @@ import LogoutButton from "../components/LogoutButton";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-const socket: Socket = io("http://localhost:5000");
+const socket: Socket = io(import.meta.env.VITE_SOCKET_URL);
 
 interface User {
   _id: string;
