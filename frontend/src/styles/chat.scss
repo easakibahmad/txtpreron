@@ -108,9 +108,11 @@
       padding: 10px;
       border-top: 1px solid #ddd;
       background: #fafafa;
+      gap: 8px; // use gap instead of margin-left
 
       input {
-        flex-grow: 1;
+        flex: 1 1 0;       // allow shrinking
+        min-width: 0;       // critical for iPhone
         padding: 10px;
         border: none;
         border-radius: 20px;
@@ -119,8 +121,8 @@
       }
 
       button {
-        margin-left: 10px;
-        padding: 10px 20px;
+        flex-shrink: 0;    // button keeps its width
+        padding: 10px 15px;
         border: none;
         background: #0084ff;
         color: white;
