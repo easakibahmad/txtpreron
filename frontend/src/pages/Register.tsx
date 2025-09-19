@@ -1,13 +1,14 @@
 import { useState } from "react";
 import axios from "axios";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 import "../styles/register.scss";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
 export default function Register() {
   const [form, setForm] = useState({ username: "", email: "", password: "" });
-  const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -17,10 +18,8 @@ export default function Register() {
     e.preventDefault();
     try {
       await axios.post(`${API_URL}/auth/register`, form);
-      toast.success("Registered successfully");
-      setTimeout(() => {
-        window.location.href = "/chat";
-      }, 1500);
+      toast.success("Account created! Please log in.");
+      navigate("/login"); // SPA redirect
     } catch (err: any) {
       toast.error(err.response?.data?.message || "Registration failed");
     }
@@ -46,17 +45,21 @@ export default function Register() {
             onChange={handleChange}
             required
           />
-            <input
-              name="password"
-              type={showPassword ? "text" : "password"}
-              placeholder="Password"
-              value={form.password}
-              onChange={handleChange}
-              required
-            />
+          <input
+            name="password"
+            type="password"
+            placeholder="Password"
+            value={form.password}
+            onChange={handleChange}
+            required
+          />
           <button type="submit">Sign Up</button>
           <div className="divider">or</div>
-          <button type="button" className="login-redirect" onClick={() => (window.location.href = "/login")}>
+          <button
+            type="button"
+            className="login-redirect"
+            onClick={() => navigate("/login")}
+          >
             Log In Instead
           </button>
         </form>

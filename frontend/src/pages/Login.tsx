@@ -1,13 +1,18 @@
 import { useState } from "react";
 import axios from "axios";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 import "../styles/login.scss";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-export default function Login() {
+interface LoginProps {
+  onLogin?: () => void;
+}
+
+export default function Login({ onLogin }: LoginProps) {
   const [form, setForm] = useState({ email: "", password: "" });
-  const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -18,11 +23,12 @@ export default function Login() {
       const res = await axios.post(`${API_URL}/auth/login`, form);
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
+
       toast.success("Logged in successfully");
-      setTimeout(() => {
-        window.location.href = "/chat";
-      }, 1500);
-    } catch (err: any){
+
+      onLogin?.(); // update token state in App
+      navigate("/chat"); // SPA redirect
+    } catch (err: any) {
       toast.error(err.response?.data?.message || "Login failed");
     }
   };
@@ -40,20 +46,21 @@ export default function Login() {
             onChange={handleChange}
             required
           />
-            <input
-              name="password"
-              type={showPassword ? "text" : "password"}
-              placeholder="Password"
-              value={form.password}
-              onChange={handleChange}
-              required
-            />
+          <input
+            name="password"
+            type="password"
+            placeholder="Password"
+            value={form.password}
+            onChange={handleChange}
+            required
+          />
           <button type="submit">Log In</button>
-          {/* <a href="#" className="forgot-password">
-            Forgot password?
-          </a> */}
           <div className="divider">or</div>
-          <button type="button" className="create-account" onClick={() => (window.location.href = "/register")}>
+          <button
+            type="button"
+            className="create-account"
+            onClick={() => navigate("/register")}
+          >
             Create New Account
           </button>
         </form>
