@@ -5,6 +5,7 @@
   min-height: 100vh;
   background-color: #f0f2f5;
   font-family: Arial, sans-serif;
+  padding: 1rem; // spacing for small screens
 
   .login-box {
     background-color: #fff;
@@ -12,6 +13,7 @@
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     width: 360px;
+    max-width: 100%; // shrink on small screens
     text-align: center;
 
     .logo {
@@ -31,6 +33,7 @@
         border: 1px solid #dddfe2;
         border-radius: 6px;
         font-size: 16px;
+        width: 100%;
       }
 
       button {
@@ -42,6 +45,7 @@
         font-size: 16px;
         cursor: pointer;
         margin-top: 10px;
+        width: 100%;
 
         &:hover {
           background-color: #166fe5;
@@ -86,9 +90,52 @@
       .create-account {
         background-color: #42b72a;
         margin-top: 0;
+        width: 100%;
         &:hover {
           background-color: #36a420;
         }
+      }
+    }
+  }
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .login-box {
+    padding: 30px 20px;
+
+    .logo {
+      font-size: 28px;
+    }
+
+    .login-form {
+      input,
+      button {
+        font-size: 15px;
+        padding: 10px;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .login-box {
+    padding: 20px 15px;
+    width: 100%; // full width on very small screens
+
+    .logo {
+      font-size: 24px;
+    }
+
+    .login-form {
+      input,
+      button {
+        font-size: 14px;
+        padding: 8px;
+      }
+
+      .divider {
+        font-size: 12px;
       }
     }
   }
