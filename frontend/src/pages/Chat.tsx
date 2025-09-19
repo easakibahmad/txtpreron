@@ -114,11 +114,7 @@ export default function Chat() {
     <div className="chat-container">
       {/* Chat List */}
       <div className="chat-list">
-        <h3>Chats</h3>
-        <div>
-        <h3>Welcome, {JSON.parse(localStorage.getItem("user") || "{}").username}</h3>
-          <LogoutButton />
-        </div>
+        <div className="header">Chats <div>{JSON.parse(localStorage.getItem("user") || "{}").username} <LogoutButton /></div></div>
         <ul>
           {users.map((u) => (
             <li
